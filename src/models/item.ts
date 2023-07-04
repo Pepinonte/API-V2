@@ -29,15 +29,20 @@ const Item = db.define(
     },
     item_file: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     item_type_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: true,
+    },
+    item_author: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
     },
   },
   {
     freezeTableName: true,
+    timestamps: false,
   },
 );
 
