@@ -27,6 +27,10 @@ const Item = db.define(
       allowNull: true,
       defaultValue: null,
     },
+    item_author: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
+    },
     item_file: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -35,6 +39,10 @@ const Item = db.define(
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
     },
+    item_date_upload: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    }
   },
   {
     freezeTableName: true,
