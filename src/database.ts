@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export default new Sequelize("orm-crud", "root", "root", {
-  host: "localhost",
-  dialect: "mysql",
+export default new Sequelize("rollin_story", "root", "*63DUMmc3oS7Tt", {
+  host: "rollin-story.com",
+  dialect: "mysql"
 });

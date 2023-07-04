@@ -50,7 +50,6 @@ export class App {
       .catch((err) => {
         console.error("Unable to connect to the database:", err);
       });
-    console.log("Database connected");
   }
 
   public async listen(): Promise<void> {
