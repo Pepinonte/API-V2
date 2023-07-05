@@ -1,5 +1,6 @@
 import express, { Application } from "express";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 //Routes
 import GetRoutes from "./routes/item/get.routes";
@@ -33,6 +34,7 @@ export class App {
   private middlewares() {
     this.app.use(morgan("dev"));
     this.app.use(express.json());
+    this.app.use(cookieParser());
   }
 
   private routes() {
