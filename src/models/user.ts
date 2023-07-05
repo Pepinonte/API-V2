@@ -13,7 +13,7 @@ const User = db.define(
       type: DataTypes.STRING(100),
       allowNull: false,
     },
-    user_passord: {
+    user_password: {
       type: DataTypes.STRING(1000),
       allowNull: false,
     },
@@ -72,7 +72,7 @@ const User = db.define(
       type: DataTypes.STRING(100),
       allowNull: true,
       defaultValue: null,
-    }
+    },
   },
   {
     freezeTableName: true,

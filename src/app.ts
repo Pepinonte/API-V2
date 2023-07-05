@@ -6,6 +6,7 @@ import GetRoutes from "./routes/item/get.routes";
 import PostRoutes from "./routes/item/post.routes";
 import PutRoutes from "./routes/item/put.routes";
 import DeleteRoutes from "./routes/item/delete.routes";
+import UserGetRoutes from "./routes/user/get.routes";
 
 //Database
 import db from "./database";
@@ -37,6 +38,7 @@ export class App {
     this.app.use(PostRoutes);
     this.app.use(PutRoutes);
     this.app.use(DeleteRoutes);
+    this.app.use(UserGetRoutes);
   }
 
   private async connectDB(): Promise<void> {
