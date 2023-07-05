@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import User from "../../models/user";
 import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
+import { jwt } from "jsonwebtoken";
+import { token } from "morgan";
+import { iUser } from "../../interfaces/get.validation";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
@@ -27,6 +30,8 @@ export async function createOne(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
+  const JWT_SECRET =
+    "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
   const { body } = req;
   console.log(body);
   const { error } = userValidation.createOne(body);
@@ -44,8 +49,14 @@ export async function login(req: Request, res: Response) {
       );
       if (!validPassword) {
         return res.status(401).json({ msg: "invalid password" });
+      } else {
+        const token = jwt.sign(body.user_name, JWT_SECRET, {
+          expiresIn: "1h",
+        });
+        res.status(200).json({ msg: "user logged in", user });
+        // res.cookie("token", token, { httpOnly: true, maxAge: 36000 });
+        // console.log(token);
       }
-      res.status(200).json({ msg: "user logged in", user });
     })
     .catch((err) => res.status(400).json(err));
 }
