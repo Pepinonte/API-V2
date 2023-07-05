@@ -1,5 +1,5 @@
-export interface iItem {
-  // id?: string;
+export interface createOne {
+  item_id?: number;
   item_name: string;
   item_price: number;
   item_description?: string;

@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import User from "../../models/user";
-import userValidation from "../../validation/userValidation";
+import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
-import { iUser } from "../../interfaces/get.validation";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
   console.log(body);
-  const { error } = userValidation(body);
+  const { error } = userValidation.createOne(body);
   if (error) return res.status(401).json(error.details[0].message);
 
   const hash = await bcrypt.hash(body.user_password, 10);
@@ -30,7 +29,7 @@ export async function createOne(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const { body } = req;
   console.log(body);
-  const { error } = userValidation(body);
+  const { error } = userValidation.createOne(body);
   if (error) return res.status(401).json(error.details[0].message);
   User.findAll({
     where: { user_name: body.user_name },

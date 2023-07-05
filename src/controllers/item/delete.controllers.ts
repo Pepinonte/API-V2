@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import Item from "../../models/item";
 
 export async function deleteById(req: Request, res: Response) {

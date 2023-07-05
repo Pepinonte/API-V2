@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import Item from "../../models/item";
-import itemValidation from "../../validation/itemValidation";
+import * as itemValidation from "../../validation/item/post.validation";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
   console.log(body);
-  const { error } = itemValidation(body);
+  const { error } = itemValidation.createOne(body);
   if (error) return res.status(401).json(error.details[0].message);
 
   Item.create({ ...body })

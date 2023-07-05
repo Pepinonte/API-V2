@@ -1,7 +1,7 @@
 import joi from "joi";
-import { iItem } from "../interfaces/iItem";
+import { iItem } from "../../interfaces/item/iItem";
 
-const itemValidation = (body: iItem) => {
+export const createOne = (body: iItem) => {
   const itemSchema = joi.object({
     item_name: joi.string().min(3).max(40).trim().required(),
     item_price: joi.number().required(),
@@ -13,5 +13,3 @@ const itemValidation = (body: iItem) => {
   });
   return itemSchema.validate(body);
 };
-
-export default itemValidation;
