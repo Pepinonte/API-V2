@@ -15,8 +15,10 @@ export async function createOne(req: Request, res: Response) {
 
   const modifyBody = {
     user_name: body.user_name,
+    user_token: body.user_token,
     user_password: hash,
   };
+  console.log(modifyBody)
 
   User.create({ ...modifyBody })
     .then((user) => {

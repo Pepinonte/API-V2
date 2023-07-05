@@ -1,5 +1,6 @@
 export interface createOne {
   // id?: string;
-  item_name: string;
-  item_password: string;
+  user_name: string;
+  user_token: string;
+  user_password: string;
 }
