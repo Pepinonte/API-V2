@@ -42,10 +42,11 @@ const Item = db.define(
     item_date_upload: {
       type: DataTypes.DATE,
       allowNull: false,
-    }
+    },
   },
   {
     freezeTableName: true,
+    timestamps: false,
   },
 );
 

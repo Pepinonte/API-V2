@@ -21,6 +21,7 @@ const ItemType = db.define(
   },
   {
     freezeTableName: true,
+    timestamps: false,
   },
 );
 
