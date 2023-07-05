@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "../../models/user";
 import userValidation from "../../validation/userValidation";
+import bcrypt from "bcrypt";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
@@ -8,9 +9,17 @@ export async function createOne(req: Request, res: Response) {
   const { error } = userValidation(body);
   if (error) return res.status(401).json(error.details[0].message);
 
-  User.create({ ...body })
+  const hash = await bcrypt.hash(body.user_password, 10);
+
+  const modifyBody = {
+    user_name: body.user_name,
+    user_password: hash,
+  };
+
+  User.create({ ...modifyBody })
     .then((user) => {
       res.status(201).json({ msg: "user created", user });
+      console.log(hash);
     })
     .catch((err) =>
       res.status(400).json({ msg: `error creating user ${err}` }),
