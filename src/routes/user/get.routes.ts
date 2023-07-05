@@ -4,7 +4,7 @@ import * as getControllers from "../../controllers/user/get.controllers";
 
 const router = Router();
 
-router.get("/getAllUsers", getControllers.getAll);
-router.get("/getUsersById/:id", getControllers.getById);
+router.get("/getAll/user", getControllers.getAll);
+router.get("/getById/user/:id", getControllers.getById);
 
 export default router;

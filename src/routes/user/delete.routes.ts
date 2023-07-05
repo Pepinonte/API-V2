@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import * as deleteControllers from "../../controllers/user/delete.cotrollers";
+import * as deleteControllers from "../../controllers/user/delete.controllers";
 
 const router = Router();
 
-router.delete("/deleteUserById/:id", deleteControllers.deleteById);
+router.delete("/deleteById/user/:id", deleteControllers.deleteById);
 
 export default router;
