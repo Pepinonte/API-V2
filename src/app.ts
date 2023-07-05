@@ -2,29 +2,26 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
-// Configuration
-import { config } from "./env";
-console.log(config);
-
-//Routes
-import GetRoutes from "./routes/item/get.routes";
-import PostRoutes from "./routes/item/post.routes";
-import PutRoutes from "./routes/item/put.routes";
-import DeleteRoutes from "./routes/item/delete.routes";
-import UserGetRoutes from "./routes/user/get.routes";
-import UserDeleteRoutes from "./routes/user/delete.routes";
-import UserPostRoutes from "./routes/user/post.routes";
-import UserPutRoutes from "./routes/user/put.routes";
-
 //Database
 import db from "./database";
 
+//Routes
+import itemGetRoutes from "./routes/item/get.routes";
+import itemPostRoutes from "./routes/item/post.routes";
+import itemPutRoutes from "./routes/item/put.routes";
+import itemDeleteRoutes from "./routes/item/delete.routes";
+import userGetRoutes from "./routes/user/get.routes";
+import userDeleteRoutes from "./routes/user/delete.routes";
+import userPostRoutes from "./routes/user/post.routes";
+import userPutRoutes from "./routes/user/put.routes";
 export class App {
   private app: Application;
-  private port: number | string | undefined;
+  private api_host: string | undefined;
+  private api_port: number | undefined;
 
-  constructor(port?: number | string) {
-    this.port = port;
+  constructor() {
+    this.api_host = process.env.API_HOST;
+    this.api_port = Number(process.env.API_PORT);
     this.app = express();
     this.settings();
     this.middlewares();
@@ -33,7 +30,8 @@ export class App {
   }
 
   private settings() {
-    this.app.set("port", this.port || process.env.PORT || 3000);
+    this.app.set("api_port", this.api_port);
+    this.app.set("api_host", this.api_host);
   }
 
   private middlewares() {
@@ -43,21 +41,21 @@ export class App {
   }
 
   private routes() {
-    this.app.use(GetRoutes);
-    this.app.use(PostRoutes);
-    this.app.use(PutRoutes);
-    this.app.use(DeleteRoutes);
-    this.app.use(UserGetRoutes);
-    this.app.use(UserDeleteRoutes);
-    this.app.use(UserPostRoutes);
-    this.app.use(UserPutRoutes);
+    this.app.use(itemGetRoutes);
+    this.app.use(itemPostRoutes);
+    this.app.use(itemPutRoutes);
+    this.app.use(itemDeleteRoutes);
+    this.app.use(userGetRoutes);
+    this.app.use(userDeleteRoutes);
+    this.app.use(userPostRoutes);
+    this.app.use(userPutRoutes);
   }
 
   private async connectDB(): Promise<void> {
     await db
       .authenticate()
       .then(() => {
-        console.log("Connection has been established successfully.");
+        console.log("Connection at the database has been established successfully.");
       })
       .catch((err) => {
         console.error("Unable to connect to the database:", err);
@@ -65,7 +63,11 @@ export class App {
   }
 
   public async listen(): Promise<void> {
-    await this.app.listen(this.app.get("port"));
-    console.log(`Server is listening on port ${this.app.get("port")}`);
+    await this.app.listen(this.app.get("api_port"), this.app.get("api_host"));
+    console.log(
+      `Server hosted at ${this.app.get(
+        "api_host",
+      )} and listening on port ${this.app.get("api_port")}`,
+    );
   }
 }

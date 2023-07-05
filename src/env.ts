@@ -1,52 +1,26 @@
-import dotenv from "dotenv";
-import fs from "fs";
+import * as dotenv from "dotenv";
 
-// Fonction pour charger les variables d'environnement à partir d'un fichier .env
-const filePath = "./.env";
-
-const allowedVariables = [
-  "MYSQL_HOST",
-  "MYSQL_USER",
-  "MYSQL_PASSWORD",
-  "MYSQL_PORT",
-  "MYSQL_DATABASE",
-  "API_HOST",
-  "API_PORT",
-];
-
-if (fs.existsSync(filePath)) {
-  console.log(`Chargement des variables d'environnement à partir du fichier ${filePath}`)
-  const envConfig = dotenv.parse(fs.readFileSync(filePath));
-  for (const key of Object.keys(envConfig)) {
-    if (allowedVariables.includes(key)) {
-      process.env[key] = envConfig[key];
-      console.log(`Variable d'environnement ${key} chargée`)
+export function loadEnvFromFile(filePath: string, allowedVariables: { [key: string]: string | number }): { [key: string]: string } {
+  console.log(`Loading environment variables from src${filePath} or from process.env otherwise from default values set in src/allowedVariables.ts`);
+  dotenv.config({ path: __dirname+filePath });
+  const myenv = {};
+  for (const variable in allowedVariables) {
+    if (!process.env[variable]) {
+      process.env[variable] = allowedVariables[variable].toString();
     }
   }
+  for (const variable in allowedVariables) {
+    myenv[variable] = process.env[variable];
+  }
+  return myenv;
 }
 
-// Fonction pour récupérer une variable d'environnement avec une valeur par défaut
-function getEnvVariable(key: string, defaultValue: string | number): string | number {
-  const value = process.env[key] || defaultValue;
-  return value;
+export function printEnvVariables(allowedVariables: { [key: string]: string | number }) {
+  console.log("Variables d'environnement chargées :");
+  const myenv = {};
+  // Print to oject format with key and value
+  for (const variable in allowedVariables) {
+    myenv[variable] = process.env[variable];
+  }
+  console.log(myenv);
 }
-
-// Liste des variables autorisées
-
-
-// Charger les variables d'environnement à partir d'un fichier .env
-// loadEnvFromFile("./.env", allowedVariables);
-
-// Exemple d'utilisation pour récupérer les variables d'environnement
-export const config = {
-  MYSQL_HOST: getEnvVariable("MYSQL_HOST", "localhost"),
-  MYSQL_USER: getEnvVariable("MYSQL_USER", "root"),
-  MYSQL_PASSWORD: getEnvVariable("MYSQL_PASSWORD", "root"),
-  MYSQL_PORT: getEnvVariable("MYSQL_PORT", 3306),
-  MYSQL_DATABASE: getEnvVariable("MYSQL_DATABASE", "db"),
-  API_HOST: getEnvVariable("API_HOST", "localhost"),
-  API_PORT: getEnvVariable("API_PORT", 4000),
-};
-
-// Exporter les variables d'environnement pour pouvoir les utiliser ailleurs
-// export config;
