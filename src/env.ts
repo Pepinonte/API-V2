@@ -4,17 +4,19 @@ import fs from "fs";
 // Fonction pour charger les variables d'environnement à partir d'un fichier .env
 function loadEnvFromFile(filePath: string, allowedVariables: string[]): void {
   if (fs.existsSync(filePath)) {
+    console.log(`Chargement des variables d'environnement à partir du fichier ${filePath}`)
     const envConfig = dotenv.parse(fs.readFileSync(filePath));
     for (const key of Object.keys(envConfig)) {
       if (allowedVariables.includes(key)) {
         process.env[key] = envConfig[key];
+        console.log(`Variable d'environnement ${key} chargée`)
       }
     }
   }
 }
 
 // Fonction pour récupérer une variable d'environnement avec une valeur par défaut
-function getEnvVariable(key: string, defaultValue: string): string {
+function getEnvVariable(key: string, defaultValue: string | number): string | number {
   const value = process.env[key] || defaultValue;
   return value;
 }
@@ -34,15 +36,15 @@ const allowedVariables = [
 loadEnvFromFile("./.env", allowedVariables);
 
 // Exemple d'utilisation pour récupérer les variables d'environnement
-const config = {
-  MYSQL_HOST: getEnvVariable("MYSQL_HOST", "localhost"),
-  MYSQL_USER: getEnvVariable("MYSQL_USER", "root"),
-  MYSQL_PASSWORD: getEnvVariable("MYSQL_PASSWORD", "root"),
-  MYSQL_PORT: getEnvVariable("MYSQL_PORT", "3306"),
-  MYSQL_DATABASE: getEnvVariable("MYSQL_DATABASE", "db"),
-  API_HOST: getEnvVariable("API_HOST", "localhost"),
-  API_PORT: getEnvVariable("API_PORT", "4000"),
-};
+// export function config = {
+//   MYSQL_HOST: getEnvVariable("MYSQL_HOST", "localhost"),
+//   MYSQL_USER: getEnvVariable("MYSQL_USER", "root"),
+//   MYSQL_PASSWORD: getEnvVariable("MYSQL_PASSWORD", "root"),
+//   MYSQL_PORT: getEnvVariable("MYSQL_PORT", 3306),
+//   MYSQL_DATABASE: getEnvVariable("MYSQL_DATABASE", "db"),
+//   API_HOST: getEnvVariable("API_HOST", "localhost"),
+//   API_PORT: getEnvVariable("API_PORT", 4000),
+// };
 
 // Exporter les variables d'environnement pour pouvoir les utiliser ailleurs
-export default config;
+// export config;
