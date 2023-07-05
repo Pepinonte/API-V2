@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../../models/user";
 import userValidation from "../../validation/userValidation";
 import bcrypt from "bcrypt";
+import { iUser } from "../../interfaces/iUser";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
@@ -31,20 +32,21 @@ export async function login(req: Request, res: Response) {
   console.log(body);
   const { error } = userValidation(body);
   if (error) return res.status(401).json(error.details[0].message);
-
-  //   User.findAll({
-  //     where: { user_name: body.user_name },
-  //     user_password: bcrypt.hash(body.user_password, 10) },
-  //   })
-  //     .then((product) => {
-  //       res.status(200).json({ msg: `product with id ${id} deleted`, product });
-  //     })
-  //     .catch((err) => res.status(400).json(err));
-  // }
-
-  // const test = bcrypt.compare(body.user_password, bcrypt.hash(body.user_password, 10));
-  const hash = bcrypt.hash(body.user_password, 10);
-  bcrypt.compare("body.user_password", await hash, function (err, result) {
-    console.log(result);
-  });
+  User.findAll({
+    where: { user_name: body.user_name },
+  })
+    .then(async (user: any) => {
+      if (user.length === 0) {
+        return res.status(401).json({ msg: "user not found" });
+      }
+      const validPassword = await bcrypt.compare(
+        body.user_password,
+        user[0].user_password,
+      );
+      if (!validPassword) {
+        return res.status(401).json({ msg: "invalid password" });
+      }
+      res.status(200).json({ msg: "user logged in", user });
+    })
+    .catch((err) => res.status(400).json(err));
 }
