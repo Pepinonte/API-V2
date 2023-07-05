@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import User from "../../models/user";
 import userValidation from "../../validation/userValidation";
-import bcrypt from "bcrypt";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
