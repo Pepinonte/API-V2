@@ -2,7 +2,6 @@ import express, { Application } from "express";
 import morgan from "morgan";
 
 //Routes
-import IndexRoutes from "./routes/item/index.routes";
 import GetRoutes from "./routes/item/get.routes";
 import PostRoutes from "./routes/item/post.routes";
 import PutRoutes from "./routes/item/put.routes";
@@ -34,7 +33,6 @@ export class App {
   }
 
   private routes() {
-    this.app.use(IndexRoutes);
     this.app.use(GetRoutes);
     this.app.use(PostRoutes);
     this.app.use(PutRoutes);
