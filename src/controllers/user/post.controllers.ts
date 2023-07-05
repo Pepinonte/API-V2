@@ -4,7 +4,6 @@ import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
 import { jwt } from "jsonwebtoken";
 import { token } from "morgan";
-import { iUser } from "../../interfaces/get.validation";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;

@@ -1,7 +1,7 @@
 import joi from "joi";
-import { iUser } from "../../interfaces/user/get.validation";
+import * as userValidation from "../../interfaces/user/post.validation";
 
- export const createOne = (body: iUser) => {
+ export const createOne = (body: userValidation.createOne) => {
   const UserSchema = joi.object({
     user_name: joi.string().min(3).max(40).trim().required(),
     user_password: joi.string().min(3).max(40).trim().required(),
