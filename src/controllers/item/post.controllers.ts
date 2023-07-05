@@ -9,10 +9,10 @@ export async function createOne(req: Request, res: Response) {
   if (error) return res.status(401).json(error.details[0].message);
 
   Item.create({ ...body })
-    .then((product) => {
-      res.status(201).json({ msg: "product created", product });
+    .then((item) => {
+      res.status(201).json({ msg: "item created", item });
     })
     .catch((err) =>
-      res.status(400).json({ msg: `error creating product ${err}` }),
+      res.status(400).json({ msg: `error creating item ${err}` }),
     );
 }

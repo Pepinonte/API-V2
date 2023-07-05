@@ -17,7 +17,7 @@ export async function getById(req: Request, res: Response) {
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
     .then((user) => {
-      res.status(200).json({ msg: `product with id ${id}`, user });
+      res.status(200).json({ msg: `user with id ${id}`, user });
     })
     .catch((err) => res.status(400).json(err));
 }

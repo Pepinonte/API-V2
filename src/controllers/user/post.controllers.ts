@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import User from "../../models/user";
 import userValidation from "../../validation/userValidation";
 import bcrypt from "bcrypt";
-import { iUser } from "../../interfaces/iUser";
 import { jwt } from "jsonwebtoken";
 import { token } from "morgan";
+import { iUser } from "../../interfaces/get.validation";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;
