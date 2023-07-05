@@ -2,6 +2,9 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
+// Configuration
+import config from "./env";
+
 //Routes
 import GetRoutes from "./routes/item/get.routes";
 import PostRoutes from "./routes/item/post.routes";
@@ -54,6 +57,7 @@ export class App {
       .authenticate()
       .then(() => {
         console.log("Connection has been established successfully.");
+        console.log(config)
       })
       .catch((err) => {
         console.error("Unable to connect to the database:", err);
