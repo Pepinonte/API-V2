@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import Item from "../models/item";
-import itemValidation from "../validation/itemValidation";
+import Item from "../../models/item";
+import itemValidation from "../../validation/itemValidation";
 
 export async function createOne(req: Request, res: Response) {
   const { body } = req;

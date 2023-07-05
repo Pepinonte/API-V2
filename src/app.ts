@@ -2,11 +2,11 @@ import express, { Application } from "express";
 import morgan from "morgan";
 
 //Routes
-import IndexRoutes from "./routes/index.routes";
-import GetRoutes from "./routes/get.routes";
-import PostRoutes from "./routes/post.routes";
-import PutRoutes from "./routes/put.routes";
-import DeleteRoutes from "./routes/delete.routes";
+import IndexRoutes from "./routes/item/index.routes";
+import GetRoutes from "./routes/item/get.routes";
+import PostRoutes from "./routes/item/post.routes";
+import PutRoutes from "./routes/item/put.routes";
+import DeleteRoutes from "./routes/item/delete.routes";
 
 //Database
 import db from "./database";

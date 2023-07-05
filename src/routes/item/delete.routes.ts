@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import * as deleteControllers from "../controllers/delete.controllers";
+import * as deleteControllers from "../../controllers/item/delete.controllers";
 
 const router = Router();
 

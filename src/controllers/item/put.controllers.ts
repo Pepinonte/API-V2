@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Product from "../models/product";
+import Product from "../../models/product";
 
 export async function updateById(req: Request, res: Response) {
   const { id } = req.params;

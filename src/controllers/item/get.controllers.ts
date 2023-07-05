@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Item from "../models/item";
+import Item from "../../models/item";
 
 export async function getAll(req: Request, res: Response) {
   Item.findAll({
