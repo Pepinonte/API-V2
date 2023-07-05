@@ -3,8 +3,8 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
 // Configuration
-// import { config } from "./env";
-// console.log(config);
+import { config } from "./env";
+console.log(config);
 
 //Routes
 import GetRoutes from "./routes/item/get.routes";

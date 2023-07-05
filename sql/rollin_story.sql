@@ -15,6 +15,7 @@ CREATE TABLE `actuality` (
 
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_token` varchar(100) NOT NULL,
   `user_name` varchar(100) NOT NULL,
   `user_password` varchar(100) NOT NULL,
   `user_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,

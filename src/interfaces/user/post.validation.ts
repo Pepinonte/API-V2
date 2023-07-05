@@ -1,5 +1,5 @@
 export interface createOne {
-  // id?: string;
+  id?: number;
   user_name: string;
   user_token: string;
   user_password: string;
