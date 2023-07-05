@@ -16,7 +16,6 @@ const ItemType = db.define(
     item_type_description: {
       type: DataTypes.STRING(1000),
       allowNull: true,
-      defaultValue: null,
     },
   },
   {

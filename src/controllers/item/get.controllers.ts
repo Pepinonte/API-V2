@@ -6,7 +6,7 @@ export async function getAll(req: Request, res: Response) {
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
     .then((item) => {
-      res.status(200).json({ msg: "all products", item });
+      res.status(200).json({ msg: "all items", item });
     })
     .catch((err) => res.status(400).json(err));
 }
@@ -17,7 +17,7 @@ export async function getById(req: Request, res: Response) {
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
     .then((item) => {
-      res.status(200).json({ msg: `product with id ${id}`, item });
+      res.status(200).json({ msg: `item with id ${id}`, item });
     })
     .catch((err) => res.status(400).json(err));
 }

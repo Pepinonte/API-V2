@@ -8,8 +8,8 @@ export async function deleteById(req: Request, res: Response) {
   Item.destroy({
     where: { item_id: id },
   })
-    .then((product) => {
-      res.status(200).json({ msg: `product with id ${id} deleted`, product });
+    .then((item) => {
+      res.status(200).json({ msg: `item with id ${id} deleted`, item });
     })
     .catch((err) => res.status(400).json(err));
 }

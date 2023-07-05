@@ -16,7 +16,6 @@ const Item = db.define(
     item_description: {
       type: DataTypes.STRING(1000),
       allowNull: true,
-      defaultValue: null,
     },
     item_price: {
       type: DataTypes.FLOAT,
@@ -25,7 +24,6 @@ const Item = db.define(
     item_picture: {
       type: DataTypes.STRING(100),
       allowNull: true,
-      defaultValue: null,
     },
     item_author: {
       type: DataTypes.INTEGER.UNSIGNED,
