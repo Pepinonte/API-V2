@@ -1,12 +1,12 @@
 import joi from "joi";
-import { iItem } from "../interfaces/iItem";
+import { iUser } from "../interfaces/iUser";
 
-const itemValidation = (body: iItem) => {
-  const itemSchema = joi.object({
+const userValidation = (body: iUser) => {
+  const UserSchema = joi.object({
     user_name: joi.string().min(3).max(40).trim().required(),
-    user_password: joi.number().required(),
+    user_password: joi.string().min(3).max(40).trim().required(),
   });
-  return itemSchema.validate(body);
+  return UserSchema.validate(body);
 };
 
-export default itemValidation;
+export default userValidation;
