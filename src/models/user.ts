@@ -24,15 +24,18 @@ const User = db.define(
     },
     user_creation_date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
     },
     user_last_login: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
     },
     user_profile_picture: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
     },
     user_biography: {
       type: DataTypes.STRING(1000),
@@ -41,7 +44,8 @@ const User = db.define(
     },
     user_email_verified: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
     },
     user_country: {
       type: DataTypes.STRING(100),
