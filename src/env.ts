@@ -16,7 +16,7 @@ export function loadEnvFromFile(filePath: string, allowedVariables: { [key: stri
 }
 
 export function printEnvVariables(allowedVariables: { [key: string]: string | number }) {
-  console.log("Variables d'environnement chargées :");
+  console.log("Environment variables loaded :");
   const myenv = {};
   // Print to oject format with key and value
   for (const variable in allowedVariables) {

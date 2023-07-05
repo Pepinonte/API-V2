@@ -2,6 +2,10 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
+//Environment variables
+import { loadEnvFromFile, printEnvVariables } from "./env";
+import allowedVariables from "./allowedEnv";
+
 //Database
 import db from "./database";
 
@@ -20,6 +24,7 @@ export class App {
   private api_port: number | undefined;
 
   constructor() {
+    // printEnvVariables(allowedVariables);
     this.api_host = process.env.API_HOST;
     this.api_port = Number(process.env.API_PORT);
     this.app = express();
