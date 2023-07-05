@@ -10,16 +10,16 @@ const User = db.define(
       primaryKey: true,
     },
     user_token: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
+      type: DataTypes.STRING(1000),
+      allowNull: true,
     },
     user_name: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     user_password: {
       type: DataTypes.STRING(1000),
-      allowNull: false,
+      allowNull: true,
     },
     user_email: {
       type: DataTypes.STRING(100),

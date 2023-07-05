@@ -11,7 +11,7 @@ const Item = db.define(
     },
     item_name: {
       type: DataTypes.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     item_description: {
       type: DataTypes.STRING(1000),
@@ -19,7 +19,7 @@ const Item = db.define(
     },
     item_price: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
     },
     item_picture: {
       type: DataTypes.STRING(100),
@@ -27,7 +27,7 @@ const Item = db.define(
     },
     item_author: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
+      allowNull: true,
     },
     item_file: {
       type: DataTypes.STRING(100),
