@@ -59,6 +59,7 @@ CREATE TABLE `item_type` (
   `item_type_id` int NOT NULL AUTO_INCREMENT,
   `item_type_name` varchar(100) NOT NULL,
   `item_type_description` varchar(100) NOT NULL,
+  `item_type_picture` varchar(100) DEFAULT NULL,
   PRIMARY KEY (item_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -79,6 +80,7 @@ CREATE TABLE `notification_type` (
   `notification_type_id` int NOT NULL AUTO_INCREMENT,
   `notification_type_name` varchar(100) NOT NULL,
   `notification_type_description` varchar(1000) NOT NULL,
+  `notification_type_picture` varchar(100) DEFAULT NULL,
   PRIMARY KEY (notification_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -172,6 +174,7 @@ CREATE TABLE `pack_type` (
   `pack_type_id` int NOT NULL AUTO_INCREMENT,
   `pack_type_name` varchar(100) NOT NULL,
   `pack_type_description` varchar(1000) NOT NULL,
+  `pack_type_picture` varchar(100) DEFAULT NULL,
   PRIMARY KEY (pack_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -227,6 +230,7 @@ CREATE TABLE `service_type` (
   `service_type_id` int NOT NULL AUTO_INCREMENT,
   `service_type_name` varchar(100) NOT NULL,
   `service_type_description` varchar(1000) NOT NULL,
+  `service_type_picture` varchar(100) DEFAULT NULL,
   PRIMARY KEY (service_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -241,6 +245,7 @@ CREATE TABLE `subscription` (
   `subscription_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `subscription_type_id` int NOT NULL,
+  `subscription_number` int NOT NULL,
   `subscription_start_date` datetime NOT NULL,
   `subscription_stop_date` datetime NOT NULL,
   PRIMARY KEY (subscription_id)
@@ -258,6 +263,8 @@ CREATE TABLE `subscription_type` (
   `subscription_type_name` varchar(100) NOT NULL,
   `subscription_type_description` varchar(1000) NOT NULL,
   `subscription_type_price` float NOT NULL,
+  `subscription_type_duration` int NOT NULL,
+  `subscription_type_picture` varchar(100) NOT NULL,
   PRIMARY KEY (subscription_type_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -361,4 +368,7 @@ ADD FOREIGN KEY (purchase_id) REFERENCES purchase(purchase_id);
 ALTER TABLE wishlist
 ADD FOREIGN KEY (user_id) REFERENCES user(user_id);
 
+INSERT INTO `item_type`(`item_type_name`, `item_type_description`) VALUES ('token','Ceci est un token.');
+INSERT INTO `item_type`(`item_type_name`, `item_type_description`) VALUES ('scenario','Ceci est un scenario.');
+INSERT INTO `user`(`user_name`, `user_password`) VALUES ('user','user1234');
 COMMIT;
