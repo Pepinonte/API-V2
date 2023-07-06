@@ -1,4 +1,5 @@
 const allowedVariables: { [key: string]: string | number } = {
+  JWT_TOKEN: "secret",
   MYSQL_HOST: "localhost",
   MYSQL_USER: "root",
   MYSQL_PASSWORD: "root",

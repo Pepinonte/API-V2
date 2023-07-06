@@ -4,10 +4,13 @@ import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 // import { token } from "morgan";
+import { loadEnvFromFile } from "../../env";
+import allowedVariables from "../../allowedEnv";
+
+const myenv = loadEnvFromFile("/.env", allowedVariables);
 
 export async function signup(req: Request, res: Response) {
-  const JWT_SECRET =
-    "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
+  const JWT_SECRET = myenv["JWT_SECRET"];
   const { body } = req;
   console.log(body);
   const { error } = userValidation.signup(body);
@@ -18,14 +21,16 @@ export async function signup(req: Request, res: Response) {
   const modifyBody = {
     user_name: body.user_name,
     user_email: body.user_email,
-    user_token: jwt.sign({user_name: body.user_name}, JWT_SECRET, { expiresIn: "1h" }),
+    user_token: jwt.sign({ user_name: body.user_name }, JWT_SECRET, {
+      expiresIn: "1h",
+    }),
     user_password: hash,
   };
-  console.log(modifyBody)
+  console.log(modifyBody);
 
   User.create({ ...modifyBody })
     .then((user) => {
-      res.cookie("token", modifyBody.user_token, { httpOnly: true, maxAge: 36000 });
+      res.cookie("token", modifyBody.user_token, { maxAge: 36000 });
       res.status(201).json({ msg: "user created", user });
       console.log(hash);
     })
@@ -35,8 +40,7 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-  const JWT_SECRET =
-    "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
+  const JWT_SECRET = myenv["JWT_SECRET"];
   const { body } = req;
   console.log(body);
   const { error } = userValidation.login(body);
@@ -55,9 +59,14 @@ export async function login(req: Request, res: Response) {
       if (!validPassword) {
         return res.status(401).json({ msg: "invalid password" });
       } else {
-        const token = jwt.sign({user_name: body.user_name}, JWT_SECRET, { expiresIn: "1h" });
-        User.update({ user_token: token }, { where: { user_name: body.user_name } });
-        res.cookie("token", token, { httpOnly: true, maxAge: 3600 });
+        const token = jwt.sign({ user_name: body.user_name }, JWT_SECRET, {
+          expiresIn: "1h",
+        });
+        User.update(
+          { user_token: token },
+          { where: { user_name: body.user_name } },
+        );
+        res.cookie("token", token, { maxAge: 3600 });
         res.status(200).json({ msg: "user logged in", user });
       }
     })
