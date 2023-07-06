@@ -67,8 +67,7 @@ export async function login(req: Request, res: Response) {
           { user_token: token },
           { where: { user_name: body.user_name } },
         );
-        // res.cookie("token", token, { maxAge: 3600 });
-        res.cookie("conn", "true", { maxAge: 3600 });
+        res.cookie("token", token, { maxAge: 3600 });
         res.status(200).json({ msg: "user logged in", user });
       }
     })
