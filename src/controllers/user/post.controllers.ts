@@ -3,7 +3,7 @@ import User from "../../models/user";
 import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { token } from "morgan";
+// import { token } from "morgan";
 
 export async function createOne(req: Request, res: Response) {
   const JWT_SECRET =
@@ -25,7 +25,7 @@ export async function createOne(req: Request, res: Response) {
 
   User.create({ ...modifyBody })
     .then((user) => {
-      res.cookie("token", token, { httpOnly: true, maxAge: 36000 });
+      res.cookie("token", modifyBody.user_token, { httpOnly: true, maxAge: 36000 });
       res.status(201).json({ msg: "user created", user });
       console.log(hash);
     })
