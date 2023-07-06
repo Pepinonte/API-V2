@@ -18,7 +18,7 @@ export async function signup(req: Request, res: Response) {
   const modifyBody = {
     user_name: body.user_name,
     user_email: body.user_email,
-    user_token: jwt.sign({payload: body.user_name}, JWT_SECRET, { expiresIn: "1h" }),
+    user_token: jwt.sign({user_name: body.user_name}, JWT_SECRET, { expiresIn: "1h" }),
     user_password: hash,
   };
   console.log(modifyBody)

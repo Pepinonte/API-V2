@@ -9,9 +9,9 @@ const auth = async (req: any, res: any, next: any) => {
       "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu",
     );
     // console.log()
-    // console.log(decodedToken)
+    console.log(decodedToken)
     const user = await User.findOne({
-      where: { user_name: "moi", user_token: authToken },
+      where: { user_name: decodedToken.user_name, user_token: authToken },
     });
     if (!user) {
       throw new Error();
