@@ -16,8 +16,8 @@ const auth = async (req: any, res: any, next: any) => {
     req.user = user;
     next();
   } catch (e) {
-    res.redirect(301, `http://${env("front_host")}:${env("front_port")}/login`);
-    // res.status(401).send({ error: "Please authenticate." });
+    // res.redirect(301, `http://${env("front_host")}:${env("front_port")}/login`);
+    res.status(401).send({ error: "Please authenticate." });
   }
 };
 
