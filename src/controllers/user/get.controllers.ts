@@ -6,7 +6,7 @@ export async function getAll(req: Request, res: Response) {
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
     .then(async (user) => {
-      res.status(200).json({ msg: "all products", user });
+      res.status(200).json({ msg: "all users", user });
     })
     .catch((err) => res.status(400).json(err));
 }
