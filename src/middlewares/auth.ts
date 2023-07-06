@@ -19,8 +19,8 @@ const auth = async (req: any, res: any, next: any) => {
     req.user = user;
     next();
   } catch (e) {
-    res.redirect(301, "http://"+myenv["API_HOST"]+":"+myenv["API_PORT"]+"/login");
-    // res.status(401).send({ error: "Please authenticate." });
+    // res.redirect(301, "http://"+myenv["API_HOST"]+":"+myenv["API_PORT"]+"/login");
+    res.status(401).send({ error: "Please authenticate." });
   }
 };
 
