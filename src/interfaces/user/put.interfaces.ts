@@ -1,7 +1,6 @@
 export interface updateById {
-  user_id: number;
   user_name?: string;
-  user_password: string;
+  user_password?: string;
   user_email?: string;
   user_last_login?: Date;
   user_profile_picture?: string;
@@ -16,8 +15,8 @@ export interface updateById {
 }
 
 export interface updateByName {
-  user_name: string;
-  user_password: string;
+  user_name?: string;
+  user_password?: string;
   user_email?: string;
   user_last_login?: Date;
   user_profile_picture?: string;

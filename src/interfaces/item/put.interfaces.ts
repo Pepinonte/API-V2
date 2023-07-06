@@ -1,5 +1,4 @@
 export interface updateById {
-  item_id: number;
   item_name?: string;
   item_description?: string;
   item_price?: number;
@@ -10,7 +9,7 @@ export interface updateById {
 }
 
 export interface updateByName {
-  item_name: string;
+  item_name?: string;
   item_description?: string;
   item_price?: number;
   item_picture?: string;

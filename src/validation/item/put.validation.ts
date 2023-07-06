@@ -3,7 +3,6 @@ import * as itemValidation from "../../interfaces/item/put.interfaces";
 
 export const updateById = (body: itemValidation.updateById) => {
   const itemSchema = joi.object({
-    item_id: joi.number().integer().required(),
     item_name: joi.string().min(3).max(40).trim(),
     item_price: joi.number().positive(),
     item_description: joi.string().min(5).max(500).trim(),
@@ -17,7 +16,7 @@ export const updateById = (body: itemValidation.updateById) => {
 
 export const updateByName = (body: itemValidation.updateByName) => {
   const itemSchema = joi.object({
-    item_name: joi.string().min(3).max(40).trim().required(),
+    item_name: joi.string().min(3).max(40).trim(),
     item_price: joi.number().positive(),
     item_description: joi.string().min(5).max(500).trim(),
     item_picture: joi.string().min(3).max(100).trim(),
