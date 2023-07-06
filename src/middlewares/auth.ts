@@ -8,7 +8,7 @@ const myenv = loadEnvFromFile("/.env", allowedVariables);
 const auth = async (req: any, res: any, next: any) => {
   try {
     const authToken = req.header("Authorization").replace("Bearer ", "");
-    const decodedToken: any = jwt.verify(authToken, myenv["JWT_SECRET"]);
+    const decodedToken: any = jwt.verify(authToken, "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu");
     console.log(decodedToken);
     const user = await User.findOne({
       where: { user_name: decodedToken.user_name, user_token: authToken },

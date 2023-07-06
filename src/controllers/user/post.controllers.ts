@@ -11,6 +11,7 @@ const myenv = loadEnvFromFile("/.env", allowedVariables);
 
 export async function signup(req: Request, res: Response) {
   const JWT_SECRET = myenv["JWT_SECRET"];
+  console.log(JWT_SECRET);
   const { body } = req;
   console.log(body);
   const { error } = userValidation.signup(body);
@@ -21,7 +22,7 @@ export async function signup(req: Request, res: Response) {
   const modifyBody = {
     user_name: body.user_name,
     user_email: body.user_email,
-    user_token: jwt.sign({ user_name: body.user_name }, JWT_SECRET, {
+    user_token: jwt.sign({ user_name: body.user_name }, "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu", {
       expiresIn: "1h",
     }),
     user_password: hash,
@@ -59,7 +60,7 @@ export async function login(req: Request, res: Response) {
       if (!validPassword) {
         return res.status(401).json({ msg: "invalid password" });
       } else {
-        const token = jwt.sign({ user_name: body.user_name }, JWT_SECRET, {
+        const token = jwt.sign({ user_name: body.user_name }, "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu", {
           expiresIn: "1h",
         });
         User.update(
