@@ -5,12 +5,12 @@ import bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 // import { token } from "morgan";
 
-export async function createOne(req: Request, res: Response) {
+export async function signup(req: Request, res: Response) {
   const JWT_SECRET =
     "goK!pusp6ThEdURUtRenOwUhAsWUCLheBazl!uJLPlS8EbreWLdrupIwabRAsiBu";
   const { body } = req;
   console.log(body);
-  const { error } = userValidation.createOne(body);
+  const { error } = userValidation.signup(body);
   if (error) return res.status(401).json(error.details[0].message);
 
   const hash = await bcrypt.hash(body.user_password, 10);
