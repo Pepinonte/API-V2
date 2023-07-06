@@ -37,6 +37,7 @@ export async function signup(req: Request, res: Response) {
       ]);
       res.append("Access-Control-Allow-Credentials", "true");
       res.append("Access-Control-Allow-Methods", "POST");
+      res.append("Access-Control-Allow-Headers", "Content-Type");
       res.status(201).json({ msg: "user created", user });
     })
     .catch((err) =>
@@ -81,6 +82,7 @@ export async function login(req: Request, res: Response) {
         ]);
         res.append("Access-Control-Allow-Credentials", "true");
         res.append("Access-Control-Allow-Methods", "POST");
+        res.append("Access-Control-Allow-Headers", "Content-Type");
         res.status(200).json({ msg: "user logged in", user });
       }
     })
