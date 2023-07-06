@@ -1,8 +1,10 @@
 import * as dotenv from "dotenv";
 
-export function loadEnvFromFile(filePath: string, allowedVariables: { [key: string]: string | number }): { [key: string]: string } {
-  // console.log(`Loading environment variables from src${filePath} or from process.env otherwise from default values set in src/allowedVariables.ts`);
-  dotenv.config({ path: __dirname+filePath });
+export function loadEnvFromFile(
+  filePath: string,
+  allowedVariables: { [key: string]: string | number },
+): { [key: string]: string } {
+  dotenv.config({ path: __dirname + filePath });
   const myenv = {};
   for (const variable in allowedVariables) {
     if (!process.env[variable]) {
@@ -15,7 +17,17 @@ export function loadEnvFromFile(filePath: string, allowedVariables: { [key: stri
   return myenv;
 }
 
-export function printEnvVariables(allowedVariables: { [key: string]: string | number }) {
+export function env(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing: process.env['${name}'].`);
+  }
+
+  return value;
+}
+export function printEnvVariables(allowedVariables: {
+  [key: string]: string | number;
+}) {
   console.log("Environment variables loaded :");
   const myenv = {};
   // Print to oject format with key and value

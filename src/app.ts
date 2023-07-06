@@ -3,8 +3,9 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
 //Environment variables
-import { loadEnvFromFile, printEnvVariables } from "./env";
-import allowedVariables from "./allowedEnv";
+import { allowedVariables } from "./allowedEnv";
+import { loadEnvFromFile, env, printEnvVariables  } from "./env";
+loadEnvFromFile("/.env", allowedVariables);
 
 //Database
 import db from "./database";
@@ -20,13 +21,13 @@ import userPostRoutes from "./routes/user/post.routes";
 import userPutRoutes from "./routes/user/put.routes";
 export class App {
   private app: Application;
-  private api_host: string | undefined;
-  private api_port: number | undefined;
+  private api_host: string;
+  private api_port: number;
 
   constructor() {
-    // printEnvVariables(allowedVariables);
-    this.api_host = process.env.API_HOST;
-    this.api_port = Number(process.env.API_PORT);
+    printEnvVariables(allowedVariables);
+    this.api_host = env('API_HOST');
+    this.api_port = Number(env('API_PORT'));
     this.app = express();
     this.settings();
     this.middlewares();
@@ -43,12 +44,13 @@ export class App {
     this.app.use(morgan("dev"));
     this.app.use(express.json());
     this.app.use(cookieParser());
-    this.app.use((req, res, next) => {
-      res.append('Access-Control-Allow-Origin', ['*']);
-      res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-      res.append('Access-Control-Allow-Headers', 'Content-Type');
-      next();
-  });
+  //   this.app.use((req, res, next) => {
+  //     // res.append('Access-Control-Allow-Origin', [`*`]);
+  //     // res.append('Access-Control-Allow-Credentials', 'true');
+  //     // res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  //     // res.append('Access-Control-Allow-Headers', 'Content-Type');
+  //     next();
+  // });
   }
 
   private routes() {

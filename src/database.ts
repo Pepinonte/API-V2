@@ -1,11 +1,8 @@
 import { Sequelize } from "sequelize";
-import {loadEnvFromFile} from "./env";
-import allowedVariables from "./allowedEnv";
+import {env} from "./env";
 
-const myenv = loadEnvFromFile("/.env", allowedVariables);
-
-export default new Sequelize(myenv["MYSQL_DATABASE"], myenv["MYSQL_USER"], myenv["MYSQL_PASSWORD"], {
-  host: myenv["MYSQL_HOST"],
-  port: Number(myenv["MYSQL_PORT"]),
+export default new Sequelize(env("MYSQL_DATABASE"), env("MYSQL_USER"), env("MYSQL_PASSWORD"), {
+  host: env("MYSQL_HOST"),
+  port: Number(env("MYSQL_PORT")),
   dialect: "mysql"
 });
