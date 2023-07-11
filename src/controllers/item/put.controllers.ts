@@ -7,9 +7,12 @@ export async function updateById(req: Request, res: Response) {
   const { body } = req;
   const { error } = itemValidation.updateById(body);
   if (error) return res.status(401).json(error.details[0].message);
-  Item.update(body, { where: { item_id: params.item_id } })
+  Item.update(body, { where: { item_id: params.id } })
     .then((item) => {
-      res.status(200).json({ msg: `item with id ${params.item_id} updated`, item });
+      if (item[0] === 0) {
+        return res.status(400).json({ msg: `item with id ${params.id} not found or element(s) provided are identical` });
+      }
+      res.status(200).json({ msg: `item with id ${params.id} updated`, item });
     })
     .catch((err) => res.status(400).json(err));
 }
@@ -19,9 +22,12 @@ export async function updateByName(req: Request, res: Response) {
   const { body } = req;
   const { error } = itemValidation.updateByName(body);
   if (error) return res.status(401).json(error.details[0].message);
-  Item.update(body, { where: { item_name: params.item_name } })
+  Item.update(body, { where: { item_name: params.name } })
     .then((item) => {
-      res.status(200).json({ msg: `item with name ${params.item_name} updated`, item });
+      if (item[0] === 0) {
+        return res.status(400).json({ msg: `item with name ${params.name} not found or element(s) provided are identical` });
+      }
+      res.status(200).json({ msg: `item with name ${params.name} updated`, item });
     })
     .catch((err) => res.status(400).json(err));
 }

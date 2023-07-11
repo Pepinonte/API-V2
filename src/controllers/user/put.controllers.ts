@@ -13,9 +13,12 @@ export async function updateById(req: Request, res: Response) {
     body.user_password = hash;
   }
 
-  User.update({...body}, { where: { user_id: params.user_id } })
+  User.update({...body}, { where: { user_id: params.id } })
     .then((user) => {
-      res.status(200).json({ msg: `user with id ${params.user_id} updated`, user });
+      if (user[0] === 0) {
+        return res.status(400).json({ msg: `user with id ${params.id} not found or element(s) provided are identical` });
+      }
+      res.status(200).json({ msg: `user with id ${params.id} updated`, user });
     })
     .catch((err) => res.status(400).json(err));
 }
@@ -30,9 +33,12 @@ export async function updateByName(req: Request, res: Response) {
     body.user_password = hash;
   }
 
-  User.update({...body}, { where: { user_name: params.user_name } })
+  User.update({...body}, { where: { user_name: params.name } })
     .then((user) => {
-      res.status(200).json({ msg: `user with name ${params.user_name} updated`, user });
+      if (user[0] === 0) {
+        return res.status(400).json({ msg: `user with name ${params.name} not found or element(s) provided are identical` });
+      }
+      res.status(200).json({ msg: `user with name ${params.name} updated`, user });
     })
     .catch((err) => res.status(400).json(err));
 }
