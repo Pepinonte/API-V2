@@ -1,46 +1,48 @@
 import { Request, Response } from "express";
-import Item from "../../models/item";
+import News from "../../models/news";
 
 export async function getAll(req: Request, res: Response) {
-  Item.findAll({
+  News.findAll({
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
-    .then((item) => {
-      if (item.length === 0) {
-        return res.status(400).json({ msg: "item not found" });
+    .then(async (news) => {
+      if (news.length === 0) {
+        return res.status(400).json({ msg: "news not found" });
       }
-      res.status(200).json({ msg: "all items", item });
+      res.status(200).json({ msg: "all news", news });
     })
     .catch((err) => res.status(400).json(err));
 }
 
 export async function getById(req: Request, res: Response) {
   const { id } = req.params;
-  Item.findByPk(id, {
+  News.findByPk(id, {
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
-    .then((item) => {
-      if (!item) {
-        return res.status(400).json({ msg: `item with id ${id} not found` });
+    .then((news) => {
+      if (!news) {
+        return res
+          .status(400)
+          .json({ msg: `news with id <${id}> not found` });
       }
-      res.status(200).json({ msg: `item with id ${id}`, item });
+      res.status(200).json({ msg: `news with id <${id}>`, news });
     })
     .catch((err) => res.status(400).json(err));
 }
 
 export async function getByName(req: Request, res: Response) {
   const { name } = req.params;
-  Item.findAll({
-    where: { item_name: name },
+  News.findAll({
+    where: { news_name: name },
     attributes: { exclude: ["createdAt", "updatedAt"] },
   })
-    .then((item) => {
-      if (item.length === 0) {
+    .then((news) => {
+      if (news.length === 0) {
         return res
           .status(400)
-          .json({ msg: `item with name ${name} not found` });
+          .json({ msg: `news with name <${name}> not found` });
       }
-      res.status(200).json({ msg: `item with name ${name}`, item });
+      res.status(200).json({ msg: `news with name <${name}>`, news });
     })
     .catch((err) => res.status(400).json(err));
 }

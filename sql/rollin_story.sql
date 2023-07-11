@@ -2,20 +2,19 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "Europe/Paris";
 
-CREATE TABLE `actuality` (
-  `actuality_id` int NOT NULL AUTO_INCREMENT,
-  `actuality_title` varchar(100) NOT NULL,
-  `actuality_content` varchar(10000) NOT NULL,
-  `actuality_picture` varchar(1000) NOT NULL,
-  `actuality_creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `actuality_link` varchar(1000) DEFAULT NULL,
-  `actuality_update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (actuality_id)
+CREATE TABLE `news` (
+  `news_id` int NOT NULL AUTO_INCREMENT,
+  `news_title` varchar(100) NOT NULL,
+  `news_content` varchar(10000) NOT NULL,
+  `news_picture` varchar(1000) NOT NULL,
+  `news_creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `news_link` varchar(1000) DEFAULT NULL,
+  `news_update_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (news_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `user` (
   `user_id` int NOT NULL AUTO_INCREMENT,
-  `user_token` varchar(100) NOT NULL,
   `user_name` varchar(100) NOT NULL,
   `user_password` varchar(100) NOT NULL,
   `user_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,

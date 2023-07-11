@@ -1,10 +1,14 @@
 import { Sequelize } from "sequelize";
-import {env} from "./env";
+import config from "./env"
 
-
-export default new Sequelize(env("MYSQL_DATABASE"), env("MYSQL_USER"), env("MYSQL_PASSWORD"), {
-  host: env("MYSQL_HOST"),
-  port: Number(env("MYSQL_PORT")),
-  dialect: "mysql",
-  logging: env("NODE_ENV") === 'production' ? false : console.log
-});
+export default new Sequelize(
+  config.MYSQL_DATABASE,
+  config.MYSQL_USER,
+  config.MYSQL_PASSWORD,
+  {
+    host: config.MYSQL_HOST,
+    port: config.MYSQL_PORT,
+    dialect: "mysql",
+    logging: config.NODE_ENV === "production" ? false : console.log,
+  },
+);

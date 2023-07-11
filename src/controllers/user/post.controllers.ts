@@ -3,17 +3,17 @@ import User from "../../models/user";
 import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { env } from "../../env";
+import config from "../../env";
 import cookieParser from "cookie-parser";
-import session from "express-session";
+// import session from "express-session";
 // import session from "express-session";
 
 export async function signup(req: Request, res: Response) {
-  const JWT_SECRET = env("JWT_SECRET");
+  const JWT_SECRET = config.JWT_SECRET;
   console.log(JWT_SECRET);
   const { body } = req;
   console.log(body);
-  console.log(req.sessionID)
+  console.log(req.sessionID);
   const { error } = userValidation.signup(body);
   if (error) return res.status(401).json(error.details[0].message);
 
@@ -45,7 +45,7 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-  const JWT_SECRET = env("JWT_SECRET");
+  const JWT_SECRET = config.JWT_SECRET;
   const { body } = req;
   console.log(body);
   const { error } = userValidation.login(body);
@@ -76,6 +76,7 @@ export async function login(req: Request, res: Response) {
           sameSite: "strict",
           secure: true,
         });
+        // res.session({ user_token: token });
         res.status(200).json({ msg: "user logged in", user });
       }
     })
