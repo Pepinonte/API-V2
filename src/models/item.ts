@@ -22,7 +22,7 @@ const Item = db.define(
       allowNull: true,
     },
     item_picture: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
     },
     item_author: {
@@ -30,7 +30,7 @@ const Item = db.define(
       allowNull: true,
     },
     item_file: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
     },
     item_type_id: {
@@ -41,6 +41,29 @@ const Item = db.define(
       type: DataTypes.DATE,
       allowNull: true,
     },
+  },
+  {
+    freezeTableName: true,
+    timestamps: false,
+  },
+);
+
+export const ItemType = db.define(
+  "item_type",
+  {
+    item_type_id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    item_type_name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    item_type_description: {
+      type: DataTypes.STRING(1000),
+      allowNull: true,
+    }
   },
   {
     freezeTableName: true,

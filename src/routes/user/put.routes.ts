@@ -1,9 +1,9 @@
 import { Router } from "express";
 import * as putControllers from "../../controllers/user/put.controllers";
+import auth from "../../middlewares/auth";
 
 const router = Router();
 
-router.put("/updateById/user/:id", putControllers.updateById);
-router.put("/updateByName/user/:name", putControllers.updateByName);
+router.put("/updateBySession/user", auth,  putControllers.updateBySession);
 
 export default router;
