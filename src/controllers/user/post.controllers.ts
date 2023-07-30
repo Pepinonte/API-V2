@@ -2,42 +2,37 @@ import { Request, Response } from "express";
 import User from "../../models/user";
 import * as userValidation from "../../validation/user/post.validation";
 import bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
-import config from "../../env";
-import cookieParser from "cookie-parser";
-// import session from "express-session";
-// import session from "express-session";
+import passport from "passport";
 
 export async function signup(req: Request, res: Response) {
-  const JWT_SECRET = config.JWT_SECRET;
-  console.log(JWT_SECRET);
+  if (req.isAuthenticated()) {
+    return res.status(200).json({ msg: "user already logged in", user: req.user });
+  }
   const { body } = req;
-  console.log(body);
-  console.log(req.sessionID);
   const { error } = userValidation.signup(body);
   if (error) return res.status(401).json(error.details[0].message);
+  const user = await User.findOne({
+    where: { user_name: body.user_name },
+  })
+  if (user) return res.status(401).json({ error: true, msg: `user <${body.user_name}> already exist` });
 
   const hash = await bcrypt.hash(body.user_password, 10);
 
   const modifyBody = {
     user_name: body.user_name,
     user_email: body.user_email,
-    user_token: jwt.sign({ user_name: body.user_name }, JWT_SECRET, {
-      expiresIn: "1h",
-    }),
     user_password: hash,
   };
-  console.log(modifyBody);
-
   User.create({ ...modifyBody })
     .then((user) => {
-      res.cookie("token", modifyBody.user_token, {
-        maxAge: 36000,
-        sameSite: "strict",
-        secure: true,
-      });
-      // res.session({ user_token: modifyBody.user_token })
-      res.status(201).json({ msg: "user created", user });
+      passport.authenticate('local', (err, user, info) => {
+        if (err) { return res.status(401).json({error: true, msg: info.message}); }
+        if (!user) { return res.status(401).json({error: true, msg: info.message}); }
+        req.logIn(user, (err) => {
+          if (err) { return res.status(401).json(err); }
+          return res.status(200).json({ msg: "user created", user: req.user });
+        });
+      })(req, res);
     })
     .catch((err) =>
       res.status(400).json({ msg: `error creating user ${err}` }),
@@ -45,40 +40,18 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-  const JWT_SECRET = config.JWT_SECRET;
+  if (req.isAuthenticated()) {
+    return res.status(200).json({ msg: "user already logged in", user: req.user });
+  }
   const { body } = req;
-  console.log(body);
   const { error } = userValidation.login(body);
   if (error) return res.status(401).json(error.details[0].message);
-  User.findAll({
-    where: { user_name: body.user_name },
-  })
-    .then(async (user: any) => {
-      if (user.length === 0) {
-        return res.status(401).json({ msg: "user not found" });
-      }
-      const validPassword = await bcrypt.compare(
-        body.user_password,
-        user[0].user_password,
-      );
-      if (!validPassword) {
-        return res.status(401).json({ msg: "invalid password" });
-      } else {
-        const token = jwt.sign({ user_name: body.user_name }, JWT_SECRET, {
-          expiresIn: "1h",
-        });
-        User.update(
-          { user_token: token },
-          { where: { user_name: body.user_name } },
-        );
-        res.cookie("token", token, {
-          maxAge: 3600,
-          sameSite: "strict",
-          secure: true,
-        });
-        // res.session({ user_token: token });
-        res.status(200).json({ msg: "user logged in", user });
-      }
-    })
-    .catch((err) => res.status(400).json(err));
+  passport.authenticate('local', (err, user, info) => {
+    if (err) { return res.status(401).json({error: true, msg: info.message}); }
+    if (!user) { return res.status(401).json({error: true, msg: info.message}); }
+    req.logIn(user, (err) => {
+      if (err) { return res.status(401).json(err); }
+      return res.status(200).json({ msg: "user logged in", user: req.user });
+    });
+  })(req, res);
 }

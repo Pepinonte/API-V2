@@ -18,7 +18,7 @@ const News = db.define(
       allowNull: true,
     },
     news_picture: {
-      type: DataTypes.STRING(1000),
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: true,
     },
     news_creation_date: {

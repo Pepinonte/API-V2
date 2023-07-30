@@ -7,11 +7,11 @@ export async function getAll(req: Request, res: Response) {
   })
     .then((item) => {
       if (item.length === 0) {
-        return res.status(400).json({ msg: "item not found" });
+        return res.status(400).json({ error: true, msg: "item not found" });
       }
       res.status(200).json({ msg: "all items", item });
     })
-    .catch((err) => res.status(400).json(err));
+    .catch((err) => res.status(400).json({ error: true, msg: err }));
 }
 
 export async function getById(req: Request, res: Response) {
@@ -21,11 +21,13 @@ export async function getById(req: Request, res: Response) {
   })
     .then((item) => {
       if (!item) {
-        return res.status(400).json({ msg: `item with id ${id} not found` });
+        return res
+          .status(400)
+          .json({ error: true, msg: `item with id ${id} not found` });
       }
       res.status(200).json({ msg: `item with id ${id}`, item });
     })
-    .catch((err) => res.status(400).json(err));
+    .catch((err) => res.status(400).json({ error: true, msg: err }));
 }
 
 export async function getByName(req: Request, res: Response) {
@@ -38,9 +40,9 @@ export async function getByName(req: Request, res: Response) {
       if (item.length === 0) {
         return res
           .status(400)
-          .json({ msg: `item with name ${name} not found` });
+          .json({ error: true, msg: `item with name ${name} not found` });
       }
       res.status(200).json({ msg: `item with name ${name}`, item });
     })
-    .catch((err) => res.status(400).json(err));
+    .catch((err) => res.status(400).json({ error: true, msg: err }));
 }
